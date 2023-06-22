@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class homep extends StatelessWidget {
+class HomePage extends StatelessWidget {
   // const  homepage({super.key});
   final day = 1;
   final String s = "not to worry";
