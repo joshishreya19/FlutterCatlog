@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/routes.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool changedbutton = false;
   @override
   Widget build(BuildContext context) {
     return Material(
         color: Colors.white,
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           children: [
             Image.asset(
               "assets/images/login_image.png",
@@ -15,9 +24,9 @@ class LoginPage extends StatelessWidget {
               height: 20.0,
             ),
             Text(
-              "Welcome",
+              "Welcome $name",
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -30,25 +39,56 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "Enter username", labelText: "Username"),
-                    ),
+                        decoration: InputDecoration(
+                            hintText: "Enter username", labelText: "Username"),
+                        onChanged: (value) {
+                          name = value;
+                          setState(() {});
+                        }),
                     TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
                           hintText: "Enter password", labelText: "Password"),
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 40.0,
                     ),
-                    ElevatedButton(
-                        child: Text("Login"),
-                        onPressed: () {
-                          print("hi codepur");
-                        })
+                    InkWell(
+                      onTap: () async{
+                        setState(() {
+                          changedbutton = true;
+                        });
+                        await Future.delayed(Duration(seconds:1));
+                        // Navigator.pushNamed(context, MyRoutes.homeRoute);
+                      },
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 1),
+                        width: changedbutton ? 50:150,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child:changedbutton ?Icon(Icons.done,color:Colors.white,): Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.cyan,
+                          
+                          borderRadius: BorderRadius.circular(changedbutton ? 50:8),
+                        ),
+                      ),
+                    )
+                    // ElevatedButton(
+                    //     child: Text("Login"),
+                    //     style: TextButton.styleFrom(minimumSize: Size(100, 40)),
+                    //     onPressed: () {
+                    //
+                    //     })
                   ],
                 ))
           ],
-        ));
+        )));
   }
 }
